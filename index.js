@@ -2,13 +2,11 @@ const inquirer = require('inquirer');
 const fs = require('fs');
 const generateMarkdown = require('./utils/generateMarkdown');
 
-// TODO: Create an array of questions for user input
-const questions = () => {
-    return inquirer.prompt([
+const questions = [
         {
             type: 'input',
             name: 'title',
-            message: 'What is the name of your project> (Required)',
+            message: 'What is the name of your project? (Required)',
             validate: nameInput => {
                 if (nameInput){
                     return true;
@@ -64,9 +62,22 @@ const questions = () => {
             choices: ['Apache', 'Boost', 'Eclipse', 'IBM', 'ISC', 'MIT', 'Mozilla', 'Perl', 'Sil', 'Unlicense', 'Zlib'] 
         },
         {
+            type: 'input',
+            name: 'collaborators',
+            message: 'How should people contribute to this project? (Required)',
+            validate: credits => {
+                if (credits) {
+                    return true;
+                } else {
+                    console.log('Please enter contribution instructions!');
+                    return false;
+                }
+            }
+        },
+        {
             type: 'input', 
             name: 'tests',
-            message: 'Tell us about the tests!',
+            message: 'How do you test this project? (Required)',
             validate:  tests => {
                 if (tests) {
                     return true;
@@ -76,18 +87,46 @@ const questions = () => {
                 }
             }
         },
+       
         {
-            type: 'input', 
-            name: 'additional-info',
-            message: 'Would you like to provide any additional information about your application?'
-        }
-    ]);
-}
-// TODO: Create a function to write README file
-function writeToFile(fileName, data) {}
+            type: 'input',
+            name: 'github',
+            message: 'Enter your GitHub Username (Required)',
+            validate: githubName => {
+                if (githubName) {
+                    return true;
+                } else {
+                    console.log('Please enter your GitHub username!');
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'email',
+            message: 'Would you like to include your email?',
+        },
+       
+];
 
-// TODO: Create a function to initialize app
-function init() {}
+
+function writeToFile(fileName, data) {
+        fs.writeFile(fileName, data, err => {
+            if (err) 
+                throw err;
+            console.log('File Created!')
+        });
+    
+};
+
+
+function init() {
+    inquirer.prompt(questions)
+        .then(function (userInput){
+            console.log(userInput)
+            writeToFile('./dist/README.md', generateMarkdown(userInput));
+        });
+};
 
 // Function call to initialize app
 init();
