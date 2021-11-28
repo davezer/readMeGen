@@ -1,10 +1,10 @@
-# awffg
+# Professional README Generator
 
   ## Licensing:
   [![License](https://img.shields.io/badge/license-MIT)](https://shields.io)
 
   ## Description:
-  ragsfdg
+  uses inquirer to generate a readME file
 
   ## Content
   - [Description](#description)
@@ -15,7 +15,7 @@
   - [Additional Information](#addition-info)
 
   ## Installation:
-  hrbng
+  download from github
 
   ## Usage:
   n/a
